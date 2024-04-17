@@ -9,8 +9,7 @@ import org.openqa.selenium.Keys;
 import java.time.Duration;
 import java.time.LocalDate;
 
-import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -18,18 +17,13 @@ import static com.codeborne.selenide.Selenide.open;
 public class CardTest {
 
 
-    @BeforeAll
-    public static void setupAll() {
-        WebDriverManager.chromedriver().setup();
-    }
-
     @Test
     void shouldTest() {
         open("http://localhost:9999/");
         $("[data-test-id='city'] input.input__control").setValue("Казань");
-        $("[data-test-id='city'] input.input__control").sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
+        //$("[data-test-id='city'] input.input__control").sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
         // Очищаем поле ввода с датой
-        $("[data-test-id='date'] input").clear();
+        //$("[data-test-id='date'] input").clear();
 // Посылаем комбинацию клавиш для удаления текста в поле
         $("[data-test-id='date'] input").sendKeys(Keys.SHIFT, Keys.ARROW_UP);
         $("[data-test-id='date'] input").sendKeys(Keys.DELETE);
@@ -40,7 +34,9 @@ public class CardTest {
         $("[data-test-id='phone'] input.input__control").setValue("+79261234567");
         $("[data-test-id='agreement']").click();
         $("span.button__text\n").click();
-        $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
+        //$(withText("Успешно! ")).shouldBe(visible, Duration.ofSeconds(15));
+        $(By.cssSelector("div.notification__content")).shouldBe(visible,Duration.ofSeconds(15));
+        $(By.cssSelector("div.notification__content")).shouldHave(Condition.exactText("Встреча успешно забронирована на 20.04.2024"));
 
     }
 }
