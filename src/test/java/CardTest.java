@@ -26,7 +26,7 @@ public class CardTest {
     @Test
     void shouldTest() {
         open("http://localhost:9999/");
-        $("[data-test-id=city] input.input__control").setValue("Казань");
+        $("[data-test-id='city'] input.input__control").setValue("Казань");
         $("[data-test-id='city'] input.input__control").sendKeys(Keys.ARROW_DOWN, Keys.ENTER);
         // Очищаем поле ввода с датой
         $("[data-test-id='date'] input").clear();
@@ -36,9 +36,9 @@ public class CardTest {
         // Заполняем поле ввода с датой новым значением
         $(By.xpath("/html/body/div[2]/div/div/div/div/div/table/tbody/tr[4]/td[6]")).click();
 
-        $("[data-test-id=name] input.input__control").setValue("Иванов Петр");
-        $("[data-test-id=phone] input.input__control").setValue("+79261234567");
-        $("[data-test-id=agreement]").click();
+        $("[data-test-id='name'] input.input__control").setValue("Иванов Петр");
+        $("[data-test-id='phone'] input.input__control").setValue("+79261234567");
+        $("[data-test-id='agreement']").click();
         $("span.button__text\n").click();
         $(withText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
 
