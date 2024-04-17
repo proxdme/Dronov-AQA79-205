@@ -8,6 +8,7 @@ import org.openqa.selenium.Keys;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.withText;
@@ -15,7 +16,13 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class CardTest {
-
+    // Получаем текущую дату
+    LocalDate today = LocalDate.now();
+    // Добавляем 3 дня к текущей дате
+    LocalDate futureDate = today.plusDays(3);
+    // Форматируем будущую дату в строку
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    String futureDateString = futureDate.format(formatter);
 
     @Test
     void shouldTest() {
@@ -28,14 +35,14 @@ public class CardTest {
         $("[data-test-id='date'] input").sendKeys(Keys.SHIFT, Keys.ARROW_UP);
         $("[data-test-id='date'] input").sendKeys(Keys.DELETE);
         // Заполняем поле ввода с датой новым значением
-        $(By.xpath("/html/body/div[2]/div/div/div/div/div/table/tbody/tr[4]/td[6]")).click();
-
+        //$(By.xpath("/html/body/div[2]/div/div/div/div/div/table/tbody/tr[4]/td[6]")).click();
+        $("[data-test-id='date'] input").setValue(futureDateString);
         $("[data-test-id='name'] input.input__control").setValue("Иванов Петр");
         $("[data-test-id='phone'] input.input__control").setValue("+79261234567");
         $("[data-test-id='agreement']").click();
         $("span.button__text\n").click();
         //$(withText("Успешно! ")).shouldBe(visible, Duration.ofSeconds(15));
-        $(By.cssSelector("div.notification__content")).shouldBe(visible,Duration.ofSeconds(15));
+        $(By.cssSelector("div.notification__content")).shouldBe(visible, Duration.ofSeconds(15));
         $(By.cssSelector("div.notification__content")).shouldHave(Condition.exactText("Встреча успешно забронирована на 20.04.2024"));
 
     }
